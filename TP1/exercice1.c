@@ -12,6 +12,7 @@ void *print_message_function_2();
 
 /* declaring the semaphore used to sync the threads */
 sem_t sem1;
+sem_t sem2;
 
 int main (int argc, const char* argv[])
 {
@@ -20,6 +21,7 @@ int main (int argc, const char* argv[])
 
     /* intialize the semaphore with a value of 1 */
     sem_init(&sem1, 0, 0);
+    sem_init(&sem2, 0, 0);
 
     /* Create independent threads each of which will execute function */
     iret1 = pthread_create( &thread1, NULL, print_message_function_1, NULL);
@@ -50,6 +52,10 @@ int main (int argc, const char* argv[])
 void *print_message_function_1()
 {
     printf("systeme ");
+
+    V(&sem1);
+    P(&sem2);
+
     printf("- ");
 
     V(&sem1);
@@ -63,8 +69,10 @@ void *print_message_function_2()
     P(&sem1);
 
     printf("temps ");
-    printf("reel ");
 
-    V(&sem1);
+    V(&sem2);
+    P(&sem1);
+
+    printf("reel ");
 }
 
