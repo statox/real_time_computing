@@ -102,7 +102,61 @@ décollage de ne pas utiliser la même piste.
 Il faudra également 4 sémaphores:
 il y en aura 2 par zones d'attentes en se basant sur les mêmes que le buffer 
 de l'exercice précédent 
-Air:    occuppées intialisé à 0
-        libres initialisé à N
-Sol:    occuppées intialisé à 0
-        libres initialisé à M
+Air:    occuppeesAir intialisé à 0
+        libresAir initialisé à N
+Sol:    occuppeesSol intialisé à 0
+        libresSol initialisé à M
+
+Question 7
+Processus existants:
+entrerAir, entrerSol, sortirAir, sortirSol
+
+AmenerAvion:
+Pour i de 0 au nombre d'avions total en l'air
+    P(libresAir)
+
+    lock(mutAir)
+    Air[AirWritingHead] = nouvelAvion
+    Décalage de AirWritingHead
+
+    unlock(mutAir)
+
+    V(occuppeesAir)
+FinPour
+
+SortirAvion:
+Pour i de 0 au nombre d'avions total au sol
+    P(libresSol)
+
+    lock(mutSol)
+    Sol[SolWritingHead] = nouvelAvion
+    Décalage de SolWritingHead
+
+    unlock(mutSol)
+
+    V(occuppeesSol)
+FinPour
+
+Atterrissage:
+Pour i de 0 au nombre d'avions total en l'air
+    P(occuppeesAir)
+    lock(pisteAtterrissage)
+    
+    Décalage de AirReadingHead
+
+    unlock(pisteAtterrissage)
+    V(libresAir)
+FinPour
+
+Decollage:
+Pour i de 0 au nombre d'avions total au sol
+    P(occuppeesSol)
+    lock(pisteAtterrissage)
+    
+    Décalage de SolReadingHead
+
+    unlock(pisteAtterrissage)
+    V(libresSol)
+FinPour
+
+
