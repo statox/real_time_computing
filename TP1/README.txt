@@ -159,4 +159,9 @@ Pour i de 0 au nombre d'avions total au sol
     V(libresSol)
 FinPour
 
+Question 8
+##########
 
+Oui l'ordre de prise des semaphores est important:
+
+Dans les fonctions Atterrissage et Décollage si on met les instructions P() et V() dans la zone d'exclusion mutuelle, un thread risque de bloquer le programme: il empechera l'autre thread 
