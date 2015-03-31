@@ -1,4 +1,4 @@
-Systèmes temps réel - TP2
+﻿Systèmes temps réel - TP2
 Thomas Chekroun - Adrien Fabre
 
 Faire un rapport complet avec les differents cas de tests etc.
@@ -46,3 +46,19 @@ a été reçu. Ainsi si le traitement du signal est long le bit n'a pas le temps
 d'etre remis à 0 et certains signaux ne sont donc pas "vus".
 
 
+Question 6 
+Sleep : on fait une pause avec usleep(500 ms) et un travail de 500ms avec do_work du coup tache periodique de 1s ( 500 + 500)
+Alarm : alarm(1) => envoie un signal SIGALRM au bout d'une seconde, on catch le signal avec pause() qui endors le thread jusqu'a la reception d'un signal,
+	Entre l'appel d'alarm() et pause() on fait notre do_work. Par défaut SIGALRM tue le process il faudrai donc rajouter un signal handler pour changer 
+	ce comportement
+Problèmes : Appel à des fonctions externes du coup risque de décallage dans le temps.
+
+Question 7 :
+Timer : Tache périodique, fonction start timer qui permet de creer notre timer, on crée la valeur de notre timer ( struct itimerspec ) prend 2 arguments si on veut un 
+timer de façon infini il faut mettre les deux variables à la même valeur, value= 0 le timer se lancera jamais, si intervalle a 0 il ne se lancera qu'une seule fois
+on appel ensuite timer create, et settime pour lui attribuer les attributs définis.
+toute les secondes le timer va lancer un SIGALARM qui va appeler la methode timer_callBack() et va faire notre do_work.
+
+Question 8 : sur 12 secondes Regarder la picture
+
+Question 9 : Problème les processus vont s'exécuter avant leur réactivation donc utilisation de pause et des signaux pour sortir de la pause
