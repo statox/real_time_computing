@@ -38,7 +38,7 @@ void *T3()
 
 int main(int ac, char **av) {
 
-    while (1) {
+    /*while (1) {*/
         printf("BOUCLE!\n"); 
         T2();
         T3();
@@ -53,7 +53,6 @@ int main(int ac, char **av) {
         T4();
         T3();
         T2();
-        
-    }
+    /*}*/
 
 }

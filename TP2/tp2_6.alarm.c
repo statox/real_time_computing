@@ -10,9 +10,15 @@
 /* Question 6 version avec alarm */
 void *do_work(int duration);
 
+void signalHandler(int signum){
+    printf ("\nHey! You got a signal %d\n", signum);
+}
+
 int main (int argc, const char* argv[]) {
     int cpt = 0;
 
+    signal (SIGALRM, signalHandler);
+    
     while (cpt<20) {
         cpt++;
         printf("iteration %d\n", cpt); 
